@@ -1,185 +1,167 @@
-a
-b
+
 <!DOCTYPE html>
 <html lang="bn">
 <head>
-  <meta charset="UTF-8">
-  <title>Premium Ludo Medal Tracker</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      text-align: center;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      color: white;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Golden Shine Buttons</title>
+<style>
+body {
+  margin: 0;
+  font-family: "Poppins", sans-serif;
+  background: radial-gradient(circle at top, #1a1a1a, #000);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+  color: #f5d76e;
+}
 
-    h1 {
-      margin-top: 30px;
-      font-size: 28px;
-      color: white;
-      text-shadow: 2px 2px 8px black;
-    }
+/* উপরের টাইটেল */
+h1 {
+  margin-top: 30px;
+  margin-bottom: 15px;
+  font-size: 26px;
+  color: #ffd700;
+  text-shadow: 0 0 15px gold;
+}
 
-    .buttons {
-      margin: 40px 0;
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 15px;
-      z-index: 2;
-      position: relative;
-    }
+/* বাটনের গ্রিড */
+.button-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 30px 18px;
+  padding: 15px;
+  width: 90%;
+  max-width: 700px;
+  justify-items: center;
+}
 
-    button {
-      padding: 15px 30px;
-      font-size: 18px;
-      border: none;
-      border-radius: 12px;
-      cursor: pointer;
-      background: linear-gradient(135deg, rgba(255,204,0,0.9), rgba(255,136,0,0.9));
-      color: #fff;
-      font-weight: bold;
-      box-shadow: 0 6px 12px rgba(0,0,0,0.4);
-      transition: transform 0.2s, box-shadow 0.2s;
-    }
+/* বাটনের স্টাইল */
+button {
+  position: relative;
+  width: 95%;
+  max-width: 260px;
+  height: 36px; /* আগের 48px থেকে কমানো (চিকন) */
+  background: linear-gradient(145deg, #d4af37, #f5e08c);
+  color: #111;
+  border: 2px solid #f5d76e;
+  border-radius: 40px;
+  font-size: 17px;
+  font-weight: 600;
+  cursor: pointer;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  box-shadow: 0 0 10px rgba(255, 215, 0, 0.4);
+}
 
-    button:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 10px 18px rgba(0,0,0,0.6);
-    }
+/* Shine effect */
+button::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -80px;
+  width: 60px;
+  height: 100%;
+  background: linear-gradient(120deg, transparent, rgba(255,255,255,0.8), transparent);
+  animation: shine 4.5s infinite linear;
+  transform: skewX(-20deg);
+  will-change: left;
+}
 
-    .container {
-      display: none;
-      padding: 20px;
-      flex: 1;
-      color: white;
-      position: relative;
-    }
+@keyframes shine {
+  0% { left: -80px; }
+  50% { left: 130%; }
+  100% { left: 130%; }
+}
 
-    #home { display: block; }
+/* Hover effect */
+button:hover {
+  transform: scale(1.07) translateY(-3px);
+  background: linear-gradient(145deg, #ffe46b, #ffd700);
+  box-shadow: 0 0 25px rgba(255, 255, 0, 0.7);
+}
 
-    #medalPage img {
-      width: 90%;
-      max-width: 350px;
-      border-radius: 16px;
-      box-shadow: 0 6px 12px rgba(0,0,0,0.7);
-      margin: 25px auto;
-      display: block;
-    }
+/* Click effect */
+button:active {
+  transform: scale(1.1) translateY(-2px);
+  background: linear-gradient(145deg, #e8ffb3, #d4af37);
+  box-shadow: 0 0 25px rgba(0, 255, 100, 0.5);
+}
 
-    #owner {
-      font-size: 26px;   /* বড় করা নাম */
-      font-weight: bold;
-      margin-top: 15px;
-      text-shadow: 2px 2px 8px black;
-    }
+/* ভিডিও পপআপ */
+.video-popup {
+  display: none;
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0, 0, 0, 0.85);
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
 
-    #liveMatch {
-      font-size: 22px;
-      font-weight: bold;
-      margin: 20px 0;
-      text-shadow: 2px 2px 8px black;
-    }
+.video-popup iframe {
+  width: 90%;
+  max-width: 360px;
+  height: 600px;
+  border: none;
+  border-radius: 12px;
+  box-shadow: 0 0 25px gold;
+}
 
-    .backBtn {
-      width: 100%;
-      padding: 18px;
-      background: #2a9d8f;
-      border: none;
-      font-size: 20px;
-      font-weight: bold;
-      position: fixed;   /* fixed করে নিচে রাখা */
-      bottom: 0;
-      left: 0;
-      cursor: pointer;
-      z-index: 2;
-    }
-
-    /* ================== */
-    /* হোম এবং মেডেল পেজ ব্যাকগ্রাউন্ড */
-    #home {
-      background: url('ludo-bg.jpg') no-repeat center center fixed;
-      background-size: cover;
-    }
-
-    #medalPage {
-      background: url('medal-bg.jpg') no-repeat center center fixed;
-      background-size: cover;
-    }
-
-    /* overlay + blur */
-    #home::before,
-    #medalPage::before {
-      content: "";
-      position: absolute;
-      top:0; left:0;
-      width:100%; height:100%;
-      background-color: rgba(0,0,0,0.35);  /* হালকা কালো overlay */
-      backdrop-filter: blur(4px);           /* হালকা blur */
-      z-index: 1;
-    }
-
-    .container > * {
-      position: relative;
-      z-index: 2;
-    }
-  </style>
+.close-btn {
+  position: absolute;
+  top: 20px; right: 30px;
+  font-size: 30px;
+  color: #fff;
+  cursor: pointer;
+  font-weight: bold;
+}
+</style>
 </head>
 <body>
 
-  <!-- হোম পেজ -->
-  <div id="home" class="container">
-    <h1>🎲  Ludo Medal Showdown By Every 10 Match 🎲</h1>
-    <div class="buttons">
-      <button onclick="openMedal(10)">10</button>
-      <button onclick="openMedal(20)">20</button>
-      <button onclick="openMedal(30)">30</button>
-      <button onclick="openMedal(40)">40</button>
-      <button onclick="openMedal(50)">50</button>
-      <button onclick="openMedal(60)">60</button>
-      <button onclick="openMedal(70)">70</button>
+<h1>✨ গোল্ডেন রিং ভিডিও বাটন ✨</h1>
 
+<div class="button-container">
+  <button data-video="https://www.youtube.com/embed/nEOoL6gW-Fs?autoplay=1">ভিডিও ১</button>
+  <button data-video="https://www.youtube.com/embed/yourlink2?autoplay=1">ভিডিও ২</button>
+  <button data-video="https://www.youtube.com/embed/yourlink3?autoplay=1">ভিডিও ৩</button>
+  <button data-video="https://www.youtube.com/embed/yourlink4?autoplay=1">ভিডিও ৪</button>
+  <button data-video="https://www.youtube.com/embed/yourlink5?autoplay=1">ভিডিও ৫</button>
+  <button data-video="https://www.youtube.com/embed/yourlink6?autoplay=1">ভিডিও ৬</button>
+  <button data-video="https://www.youtube.com/embed/yourlink7?autoplay=1">ভিডিও ৭</button>
+  <button data-video="https://www.youtube.com/embed/yourlink8?autoplay=1">ভিডিও ৮</button>
+  <button data-video="https://www.youtube.com/embed/yourlink9?autoplay=1">ভিডিও ৯</button>
+  <button data-video="https://www.youtube.com/embed/yourlink10?autoplay=1">ভিডিও ১০</button>
+</div>
 
-    <div id="liveMatch">📡 লাইভ ম্যাচ:আরিফ বিল্লা VS আলতাফ মাহমুদ : 36 VS 35 
-    
-</div id= "liveMatch"> ও হয়না ও </div
-
-<div></div>
-  <!-- মেডেল পেজ -->
-  <div id="medalPage" class="container">
-    <h1 id="matchTitle">Match</h1>
-    <img id="medalImg" src="medal10.jpg" alt="Medal">
-    <div id="owner">আরিফ বিল্লা</div>  <!-- বড় নাম -->
-    <button class="backBtn" onclick="goBack()">⬅  Back </button>
-  </div>
+<!-- 🎬 ভিডিও পপআপ -->
+<div class="video-popup" id="popup">
+  <span class="close-btn" id="close">&times;</span>
+  <iframe id="videoFrame" allowfullscreen></iframe>
+</div>
 
 <script>
-    const medals = {
-      10: { img: "medal10.jpg", owner: "আলতাফ মাহমুদ is owner of the medal" },
-      20: { img: "medal20.jpg", owner: "আলতাফ মাহমুদ is owner of the medal" },
-      30: { img: "medal30.jpg", owner: "আলতাফ মাহমুদ is owner of the medal" },
-      40: { img: "medal40.jpg", owner: "আরিফ বিল্লা is owner of the medal" },
-      50: { img: "medal50.jpg", owner: "আরিফ বিল্লা is owner of the medal" },
-      60: { img: "medal60.jpg", owner: "আরিফ বিল্লা is owner of the medal" },
-      70: { img: "medal70.jpg", owner: "আরিফ বিল্লা is owner of the medal " }
-    };
+const buttons = document.querySelectorAll("button");
+const popup = document.getElementById("popup");
+const videoFrame = document.getElementById("videoFrame");
+const closeBtn = document.getElementById("close");
 
-    function openMedal(num) {
-      document.getElementById("home").style.display = "none";
-      document.getElementById("medalPage").style.display = "block";
-      document.getElementById("matchTitle").innerText = num + " ম্যাচের রিওয়ার্ড মেডেল";
-      document.getElementById("medalImg").src = medals[num].img;
-      document.getElementById("owner").innerText = medals[num].owner;
-    }
+buttons.forEach(btn => {
+  btn.addEventListener("click", () => {
+    const videoUrl = btn.getAttribute("data-video");
+    videoFrame.src = videoUrl;
+    popup.style.display = "flex";
+  });
+});
 
-    function goBack() {
-      document.getElementById("medalPage").style.display = "none";
-      document.getElementById("home").style.display = "block";
-    }
-  </script>
+closeBtn.addEventListener("click", () => {
+  popup.style.display = "none";
+  videoFrame.src = "";
+});
+</script>
 
 </body>
 </html>
